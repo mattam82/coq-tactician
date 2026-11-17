@@ -51,7 +51,7 @@ let sorts2s = function
 let instance2s i =
   let qs, levels = UVars.Instance.to_array i in
   (* todo handle qualities *)
-  Array.to_list (Array.map (fun l -> s2s (Univ.Level.to_string l)) levels)
+  Array.to_list (Array.map (fun l -> s2s (Pp.string_of_ppcmds (format_oneline (Univ.Universe.raw_pr l)))) levels)
 
 let cast_kind2s = function
   | VMcast -> s2s "VMcast"

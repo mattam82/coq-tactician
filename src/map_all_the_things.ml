@@ -698,7 +698,8 @@ module MakeMapper (M: MapDef) = struct
       let+ id = f id in MsgIdent id
     | x -> return x
 
-  let glob_level_map m = glob_sort_expr_map (glob_sort_name_map m)
+  let glob_univ_map m =
+    glob_sort_expr_map (List.map (fun (n, k) -> let+ n = glob_sort_name_map m n in (n, k)))
 
   type 'a tactic_mapper = {
     tactic_map   : 'tacexpr map;
@@ -736,7 +737,7 @@ module MakeMapper (M: MapDef) = struct
        and+ l = option_map (fun 
           {qualities = qs;extensible_qualities;univlevels = us;extensible_univlevels} ->
            (* todo handle qualities *)
-           let+ us = List.map (glob_level_map m) us in
+           let+ us = List.map (glob_univ_map m) us in
            {qualities = qs;extensible_qualities;univlevels = us;extensible_univlevels})
            l
        in

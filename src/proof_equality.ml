@@ -89,7 +89,7 @@ let evars_equal evd1 evd2 (equal : (Evar.t * Evar.t) list) =
       let u1 = EConstr.EInstance.(kind !evd_common (make u1)) in
       let u2 = EConstr.EInstance.(kind !evd_common (make u2)) in
       try evd_common := add_constraints !evd_common
-            UnivProblem.(enforce_eq_instances_univs false u1 u2 Set.empty); true
+            UnivProblem.(enforce_eq_instances_univs ~weak:false u1 u2 Set.empty); true
       with UniversesDiffer -> false
       (* Univ.UniverseInconsistency is gone in 8.16 *)
       (* with Univ.UniverseInconsistency _ | UniversesDiffer -> false *)
